@@ -1,5 +1,7 @@
 import "package:flutter/material.dart";
 
+import "package:soundpool/soundpool.dart";
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -7,10 +9,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  //String _text01 = "❌ キャンセル";
-  //String _text02 = "⭕️ 飲みました";
-
   List<String> _texts = ["❌ キャンセル", "⭕️ 飲みました"];
+
+  Soundpool _soundpool;
+
+  @override
+  void initState() {
+    _soundpool = Soundpool();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _soundpool.release();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
