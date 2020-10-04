@@ -11,6 +11,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<String> _texts = ["❌ キャンセル", "⭕️ 飲みました"];
 
+  List<int> _soundIds = [0, 0];
+
   Soundpool _soundpool;
 
   @override
@@ -45,8 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(flex: 1, child: _soundButton(_texts[0])),
-                  Expanded(flex: 1, child: _soundButton(_texts[1]))
+                  Expanded(flex: 1, child: _soundButton(_texts[0], _soundIds[0])),
+                  Expanded(flex: 1, child: _soundButton(_texts[1], _soundIds[1]))
                 ],
               ),
             )
@@ -56,10 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _soundButton(String displayText) {
+  Widget _soundButton(String displayText, int soundId) {
     return Container(
         padding: EdgeInsets.all(8.0),
         child: RaisedButton(
+          onPressed: null, //TODO 音を鳴らす
           child: Text(displayText),
         ));
   }
