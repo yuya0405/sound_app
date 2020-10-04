@@ -6,6 +6,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  //String _text01 = "❌ キャンセル";
+  //String _text02 = "⭕️ 飲みました";
+
+  List<String> _texts = ["❌ キャンセル", "⭕️ 飲みました"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(flex: 1, child: _soundButton()),
-                  Expanded(flex: 1, child: _soundButton())
+                  Expanded(flex: 1, child: _soundButton(_texts[0])),
+                  Expanded(flex: 1, child: _soundButton(_texts[1]))
                 ],
               ),
             )
@@ -37,7 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _soundButton() {
-    return RaisedButton();
+  Widget _soundButton(String displayText) {
+    return Container(
+        padding: EdgeInsets.all(8.0),
+        child: RaisedButton(
+          child: Text(displayText),
+        ));
   }
 }
