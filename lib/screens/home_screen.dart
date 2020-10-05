@@ -9,19 +9,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   List<String> _texts = ["❌ キャンセル", "⭕️ 飲みました"];
-
   List<int> _soundIds = [0, 0];
-
   Soundpool _soundpool;
-
-  int number = 3;
+  Widget _imageWidget = Image.asset("assets/images/medical_kusuri_nomiwasure_man.png");
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    await _initSounds();
+    _initSounds();
   }
 
   Future<void> _initSounds() async {
@@ -29,6 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _soundIds[0] = await loadSound("assets/sounds/cancel3.mp3");
     _soundIds[1] = await loadSound("assets/sounds/decision3.mp3");
+    setState(() {
+
+    });
   }
 
   Future<int> loadSound(String soundPath) {
@@ -55,7 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
                 child: Center(
                     child:
-                    Text("お薬を飲む時間です", style: TextStyle(fontSize: 20.0)))),
+                        Text("お薬を飲む時間です", style: TextStyle(fontSize: 20.0)))),
+            Expanded(child: _imageWidget),
             Expanded(
               flex: 1,
               child: Row(
@@ -78,8 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         padding: EdgeInsets.all(8.0),
         child: RaisedButton(
-          onPressed: null, //TODO 音を鳴らす
+          onPressed: () => _playSound(soundId),
           child: Text(displayText),
         ));
+  }
+
+  void _playSound(int soundId) async {
+    await _soundpool.play(soundId);
   }
 }
