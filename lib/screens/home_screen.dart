@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter/services.dart';
 
 import "package:soundpool/soundpool.dart";
 
@@ -15,10 +16,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Soundpool _soundpool;
 
+  int number = 3;
+
   @override
-  void initState() {
-    _soundpool = Soundpool();
+  void initState() async {
     super.initState();
+    await _initSounds();
+  }
+
+  Future<void> _initSounds() async {
+    _soundpool = Soundpool();
+
+    _soundIds[0] = await loadSound("assets/sounds/cancel3.mp3");
+    _soundIds[1] = await loadSound("assets/sounds/decision3.mp3");
+  }
+
+  Future<int> loadSound(String soundPath) {
+    return rootBundle.load(soundPath).then((value) => _soundpool.load(value));
   }
 
   @override
@@ -41,14 +55,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
                 child: Center(
                     child:
-                        Text("お薬を飲む時間です", style: TextStyle(fontSize: 20.0)))),
+                    Text("お薬を飲む時間です", style: TextStyle(fontSize: 20.0)))),
             Expanded(
               flex: 1,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(flex: 1, child: _soundButton(_texts[0], _soundIds[0])),
-                  Expanded(flex: 1, child: _soundButton(_texts[1], _soundIds[1]))
+                  Expanded(
+                      flex: 1, child: _soundButton(_texts[0], _soundIds[0])),
+                  Expanded(
+                      flex: 1, child: _soundButton(_texts[1], _soundIds[1]))
                 ],
               ),
             )
