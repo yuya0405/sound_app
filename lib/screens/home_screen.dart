@@ -87,5 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _playSound(int soundId) {
     _soundpool.play(soundId);
+    _imageWidget = Image.asset("assets/images/hand_good.png");
   }
 }
