@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _initSounds();
+    print("initState終わった＝buildメソッド回った");
   }
 
   Future<void> _initSounds() async {
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _soundIds[0] = await loadSound("assets/sounds/cancel3.mp3");
     _soundIds[1] = await loadSound("assets/sounds/decision3.mp3");
+    print("initState終わった＝効果音ロード終わった");
     setState(() {
 
     });
@@ -83,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 
-  void _playSound(int soundId) async {
-    await _soundpool.play(soundId);
+  void _playSound(int soundId) {
+    _soundpool.play(soundId);
   }
 }
