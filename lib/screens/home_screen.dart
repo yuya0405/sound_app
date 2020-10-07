@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 
@@ -22,14 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initSounds() async {
-    _soundpool = Soundpool();
+    try{
+      _soundpool = Soundpool();
 
-    _soundIds[0] = await loadSound("assets/sounds/cancel3.mp3");
-    _soundIds[1] = await loadSound("assets/sounds/decision3.mp3");
-    print("initState終わった＝効果音ロード終わった");
-    setState(() {
+      _soundIds[0] = await loadSound("assets/sounds/cancel3.mp3");
+      _soundIds[1] = await loadSound("assets/sounds/decision3.mp3");
+      print("initState終わった＝効果音ロード終わった");
+      setState(() {
 
-    });
+      });
+    } on IOException catch (error) {
+      print("エラーの内容は：$error");
+    }
   }
 
   Future<int> loadSound(String soundPath) {
@@ -80,13 +86,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         padding: EdgeInsets.all(8.0),
         child: RaisedButton(
+          color: Colors.deepOrange,
           onPressed: () => _playSound(soundId),
-          child: Text(displayText),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20.0))
+          ),
+          child: Text(displayText, style: TextStyle(color: Colors.white)),
         ));
   }
 
   void _playSound(int soundId) {
     _soundpool.play(soundId);
     _imageWidget = Image.asset("assets/images/hand_good.png");
+    setState(() {
+
+    });
   }
 }
